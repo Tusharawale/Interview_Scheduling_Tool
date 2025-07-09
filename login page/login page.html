@@ -1,0 +1,129 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   LOGIN ACCOUNT
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Poppins', sans-serif;
+    }
+   .oval-shadow {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      width: 220px;
+      height: 100px;
+      background: rgba(47, 128, 237, 0.3);
+      filter: blur(40px);
+      border-radius: 50% / 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+  </style>
+ </head>
+ <body class="bg-[#454A59] min-h-screen flex items-center justify-center p-6">
+  <div class="relative max-w-5xl w-full bg-[#1E222E] rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.3)] flex flex-col md:flex-row overflow-hidden">
+   <!-- Left side form -->
+   <div class="w-full md:w-1/2 p-10 md:pl-16 md:pr-12 flex flex-col text-white">
+    <!-- Nav -->
+    <nav class="flex items-center space-x-6 mb-10">
+     <div class="flex items-center space-x-2">
+      <div class="w-5 h-5 rounded-full bg-[#2F80ED]">
+      </div>
+      <span class="font-semibold text-white text-base">
+       INTERNPRO APP.
+      </span>
+     </div>
+     <a class="text-[#6B7280] text-sm hover:text-white transition" href="#">
+      Home
+     </a>
+     <a class="text-[#6B7280] text-sm hover:text-white transition" href="#">
+      Join
+     </a>
+    </nav>
+    <div class="mb-6 text-xs text-[#9CA3AF] font-semibold tracking-widest">
+     START YOUR CURIOUR
+    </div>
+    <h1 class="text-white text-3xl font-extrabold mb-2 leading-tight">
+     LOGIN YOUR account
+     <span class="text-[#2F80ED]">
+      .
+     </span>
+    </h1>
+    <p class="text-[#6B7280] text-xs mb-8">
+     LOGIN WITH OTP?
+     <a class="text-[#2F80ED] hover:underline" href="#">
+      SEND OTP
+     </a>
+    </p>
+    <form class="space-y-4 max-w-md">
+     <div class="flex space-x-4">
+      <div class="flex-1">
+       <label class="sr-only" for="firstName">
+        First name
+       </label>
+       <div class="bg-[#2A2E3E] rounded-md px-3 py-2 text-xs flex items-center space-x-2">
+        <input class="bg-transparent outline-none text-white w-full font-semibold text-xs" id="firstName" placeholder="first name" type="text" />
+        <i class="far fa-id-card text-[#6B7280] text-xs">
+        </i>
+       </div>
+      </div>
+      <div class="flex-1">
+       <label class="sr-only" for="lastName">
+        Last name
+       </label>
+       <div class="bg-[#2A2E3E] rounded-md px-3 py-2 text-xs flex items-center space-x-2">
+        <input class="bg-transparent outline-none text-white w-full font-semibold text-xs" id="lastName" placeholder="last name" type="text" />
+        <i class="far fa-id-card text-[#6B7280] text-xs">
+        </i>
+       </div>
+      </div>
+     </div>
+     <div>
+      <label class="sr-only" for="email">
+       Email
+      </label>
+      <div class="bg-[#2A2E3E] rounded-md px-3 py-2 text-xs flex items-center space-x-2">
+       <input class="bg-transparent outline-none text-white w-full font-semibold text-xs" id="email" placeholder="EMAIL.id@gmail.com" type="email" />
+       <i class="far fa-envelope text-[#6B7280] text-xs">
+       </i>
+      </div>
+     </div>
+     <div>
+      <label   class="sr-only" for="password" >
+       Password
+      </label>
+      <div class="bg-[#2A2E3E] rounded-md px-3 py-2 text-xs flex items-center space-x-2 border border-[#2F80ED]">
+       <input class="bg-transparent outline-none text-white w-full font-semibold text-xs" id="password" placeholder="Password" type="password" />
+       <i class="far fa-eye text-[#6B7280] text-xs cursor-pointer">
+       </i>
+      </div>
+     </div>
+     <div class="flex space-x-4 mt-6">
+      <button class="bg-[#4B5563] text-white text-xs font-semibold rounded-full px-6 py-2" type="button">
+       Forget Password
+      </button>
+      <button class="bg-[#2F80ED] text-white text-xs font-semibold rounded-full px-6 py-2" type="submit">
+       Login account
+      </button>
+     </div>
+    </form>
+   </div>
+   <!-- Right side image and logo -->
+   <div class="hidden md:block md:w-1/2 relative">
+    <img alt="Mountain landscape with trees and clouds in dark moody colors" class="w-full h-full object-cover" height="600" src="https://storage.googleapis.com/a1aa/image/d2fb7a65-2126-480c-6885-d3d5a05cfec4.jpg" width="600"/>
+    <div class="oval-shadow"></div>
+    preserveaspectratio="none" stroke="#374151" stroke-dasharray="4 4" stroke-width="1" viewbox="0 0 400 600">
+     <path d="M150 0c0 100 200 100 200 300s-200 300-200 300" stroke-linecap="round">
+     </path>
+    </svg>
+   </div>
+  </div>
+ </body>
+</html>

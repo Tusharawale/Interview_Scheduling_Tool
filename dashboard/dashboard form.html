@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Form</title>
+    <link rel="stylesheet" href="dashboard form.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Information Section -->
+        <div class="section">
+            <h2 class="section-title information-title">INFORMATION</h2>
+            <div class="information-card">
+                <div class="profile-section">
+                    <div class="avatar-container">
+                        <div class="avatar"></div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label information-label">FIRST NAME</label>
+                            <input type="text" class="form-input information-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">MIDDLE NAME</label>
+                            <input type="text" class="form-input information-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">LAST NAME</label>
+                            <input type="text" class="form-input information-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">EMAIL</label>
+                            <input type="email" class="form-input information-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">CONTACT NUMBER</label>
+                            <input type="tel" class="form-input information-input">
+                        </div>
+                        <div></div>
+                        <div class="form-group">
+                            <label class="form-label information-label">GENDER</label>
+                            <select class="form-select information-input">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">DATE OF BIRTH</label>
+                            <input type="date" class="form-input information-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">SELECT YOUR COUNTRY</label>
+                            <select class="form-select information-input">
+                                <option value="">Select Country</option>
+                                <option value="us">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="ca">Canada</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">STATE</label>
+                            <input type="text" class="form-input information-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label information-label">CITY</label>
+                            <input type="text" class="form-input information-input">
+                        </div>
+                        <div></div>
+                        <div class="form-group address-group">
+                            <label class="form-label information-label">LINE 1 OF THE ADDRESS</label>
+                            <input type="text" class="form-input information-input">
+                        </div>
+                        <div></div>
+                        <div class="form-group address-group">
+                            <label class="form-label information-label">LINE 2 OF THE ADDRESS</label>
+                            <input type="text" class="form-input information-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Qualification Section -->
+        <div class="section">
+            <h2 class="section-title qualification-title">QUALIFICATION</h2>
+            <div class="qualification-card">
+                <div class="qualification-form">
+                    <div class="form-group">
+                        <label class="form-label qualification-label">COLLEGE NAME</label>
+                        <input type="text" class="form-input qualification-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label qualification-label">YOUR BRANCH</label>
+                        <input type="text" class="form-input qualification-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label qualification-label">CURRENT EDUCATION</label>
+                        <input type="text" class="form-input qualification-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label qualification-label">SEMESTER</label>
+                        <input type="text" class="form-input qualification-input">
+                    </div>
+                </div>
+
+                <div class="certificates-grid" id="qualificationGrid">
+                    <!-- Qualification certificates will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Programming Languages Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title programming-title">PROGRAMMING LANGUAGES</h2>
+                <button class="btn btn-programming" onclick="addCertificate()">
+                    <span class="btn-icon">+</span>
+                    ADD CERTIFICATE
+                </button>
+            </div>
+            <div class="programming-grid" id="programmingGrid">
+                <!-- Programming language certificates will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title skills-title">SKILLS</h2>
+                <button class="btn btn-skills" onclick="addSkill()">
+                    <span class="btn-icon">+</span>
+                    ADD SKILL
+                </button>
+            </div>
+            <div class="skills-card">
+                <div class="skill-tag">💡 Skill</div>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <div class="section">
+            <h2 class="section-title experience-title">EXPERIENCE</h2>
+            <div class="experience-card">
+                <div class="experience-form">
+                    <div class="form-group">
+                        <label class="form-label experience-label">🏢 Name of the company</label>
+                        <input type="text" class="form-input experience-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label experience-label">📅 Start of work</label>
+                        <input type="date" class="form-input experience-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label experience-label">📅 End of work</label>
+                        <input type="date" class="form-input experience-input">
+                    </div>
+                </div>
+                <div class="experience-actions">
+                    <button class="btn btn-experience">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard form.js"></script>
+</body>
+</html>

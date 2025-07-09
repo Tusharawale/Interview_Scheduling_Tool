@@ -1,0 +1,420 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+   
+    margin: 0 auto;
+    padding: 24px;
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+    min-height: 100vh;
+}
+
+.section {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+/* Information Section */
+.information-title {
+    color: #1e40af;
+}
+
+.information-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+}
+
+.profile-section {
+    display: flex;
+    gap: 32px;
+}
+
+.avatar-container {
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 128px;
+    height: 128px;
+    background: linear-gradient(135deg, #6366f1 0%, #9333ea 100%);
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.form-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.address-group {
+    grid-column: span 2;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.information-label {
+    color: #1d4ed8;
+}
+
+.form-input, .form-select {
+    padding: 8px 12px;
+    border: 1px solid;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.information-input {
+    background-color: #eef2ff;
+    border-color: #c7d2fe;
+}
+
+.information-input:focus {
+    outline: none;
+    border-color: #6366f1;
+}
+
+/* Qualification Section */
+.qualification-title {
+    color: #166534;
+}
+
+.qualification-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+}
+
+.qualification-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.qualification-label {
+    color: #15803d;
+}
+
+.qualification-input {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.qualification-input:focus {
+    outline: none;
+    border-color: #22c55e;
+}
+
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.certificate-card {
+    background: linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: box-shadow 0.3s;
+}
+
+.certificate-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-info {
+    color: white;
+    margin-bottom: 16px;
+}
+
+.certificate-info div {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Programming Languages Section */
+.programming-title {
+    color: #6b21a8;
+}
+
+.programming-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.programming-card {
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    height: 192px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s;
+}
+
+.programming-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.programming-content {
+    text-align: center;
+}
+
+.programming-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.programming-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.programming-subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Language-specific colors */
+.javascript {
+    background-color: #eab308;
+    color: black;
+}
+
+.python {
+    background-color: #2563eb;
+    color: white;
+}
+
+.java {
+    background-color: #dc2626;
+    color: white;
+}
+
+.react {
+    background-color: #06b6d4;
+    color: white;
+}
+
+.nodejs {
+    background-color: #16a34a;
+    color: white;
+}
+
+.sql {
+    background-color: #9333ea;
+    color: white;
+}
+
+/* Skills Section */
+.skills-title {
+    color: #ea580c;
+}
+
+.skills-card {
+    background: linear-gradient(135deg, #fb923c 0%, #ef4444 100%);
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+}
+
+.skill-tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Experience Section */
+.experience-title {
+    color: #0f766e;
+}
+
+.experience-card {
+    background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%);
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+}
+
+.experience-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.experience-label {
+    color: white;
+    font-weight: 600;
+}
+
+.experience-input {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.experience-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.experience-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Buttons */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-icon {
+    font-size: 16px;
+}
+
+.btn-programming {
+    background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-programming:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+}
+
+.btn-skills {
+    background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-skills:hover {
+    background: linear-gradient(135deg, #c2410c 0%, #b91c1c 100%);
+}
+
+.btn-experience {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.btn-experience:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-certificate {
+    width: 100%;
+    background-color: white;
+    color: #15803d;
+    font-weight: 600;
+}
+
+.btn-certificate:hover {
+    background-color: #f3f4f6;
+}
+
+.btn-programming-view {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.btn-programming-view:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .qualification-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .certificates-grid,
+    .programming-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .experience-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+}

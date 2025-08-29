@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Directory</title>
+    <link rel="stylesheet" href="list of employee.css">
+   
+</head>
+<body>
+    <div class="container">
+        <!-- Header Row -->
+        <div class="header-row">
+            <div class="header-item"></div>
+            <div class="header-item">Name of the Employee</div>
+            <div class="header-item">Location</div>
+            <div class="header-item">Email Id</div>
+            <div class="header-item">contact number</div>
+            <div class="header-item">Linkdin url</div>
+            <div class="header-item">Github link</div>
+            <div class="header-item">College name</div>
+            <div class="header-item">college branch</div>
+            <div class="header-item"></div>
+        </div>
+
+        <!-- Employee Rows -->
+        <div class="employee-row" data-employee="1">
+            <div class="profile-pic">profile pic</div>
+            <div class="employee-info">John Doe</div>
+            <div class="employee-info">New York, NY</div>
+            <div class="employee-info">john.doe@company.com</div>
+            <div class="employee-info">+1 (555) 123-4567</div>
+            <div class="employee-info">linkedin.com/in/johndoe</div>
+            <div class="employee-info">github.com/johndoe</div>
+            <div class="employee-info">MIT</div>
+            <div class="employee-info">Computer Science</div>
+            <button class="view-profile-btn" onclick="openModal(1)">View Profile</button>
+        </div>
+
+        <div class="employee-row" data-employee="2">
+            <div class="profile-pic">profile pic</div>
+            <div class="employee-info">Jane Smith</div>
+            <div class="employee-info">San Francisco, CA</div>
+            <div class="employee-info">jane.smith@company.com</div>
+            <div class="employee-info">+1 (555) 987-6543</div>
+            <div class="employee-info">linkedin.com/in/janesmith</div>
+            <div class="employee-info">github.com/janesmith</div>
+            <div class="employee-info">Stanford University</div>
+            <div class="employee-info">Software Engineering</div>
+            <button class="view-profile-btn" onclick="openModal(2)">View Profile</button>
+        </div>
+
+        <div class="employee-row" data-employee="3">
+            <div class="profile-pic">profile pic</div>
+            <div class="employee-info">Mike Johnson</div>
+            <div class="employee-info">Austin, TX</div>
+            <div class="employee-info">mike.johnson@company.com</div>
+            <div class="employee-info">+1 (555) 456-7890</div>
+            <div class="employee-info">linkedin.com/in/mikejohnson</div>
+            <div class="employee-info">github.com/mikejohnson</div>
+            <div class="employee-info">UT Austin</div>
+            <div class="employee-info">Information Technology</div>
+            <button class="view-profile-btn" onclick="openModal(3)">View Profile</button>
+        </div>
+
+        <div class="employee-row" data-employee="4">
+            <div class="profile-pic">profile pic</div>
+            <div class="employee-info">Sarah Wilson</div>
+            <div class="employee-info">Seattle, WA</div>
+            <div class="employee-info">sarah.wilson@company.com</div>
+            <div class="employee-info">+1 (555) 321-0987</div>
+            <div class="employee-info">linkedin.com/in/sarahwilson</div>
+            <div class="employee-info">github.com/sarahwilson</div>
+            <div class="employee-info">University of Washington</div>
+            <div class="employee-info">Data Science</div>
+            <button class="view-profile-btn" onclick="openModal(4)">View Profile</button>
+        </div>
+
+        <div class="employee-row" data-employee="5">
+            <div class="profile-pic">profile pic</div>
+            <div class="employee-info">David Brown</div>
+            <div class="employee-info">Boston, MA</div>
+            <div class="employee-info">david.brown@company.com</div>
+            <div class="employee-info">+1 (555) 654-3210</div>
+            <div class="employee-info">linkedin.com/in/davidbrown</div>
+            <div class="employee-info">github.com/davidbrown</div>
+            <div class="employee-info">Harvard University</div>
+            <div class="employee-info">Computer Engineering</div>
+            <button class="view-profile-btn" onclick="openModal(5)">View Profile</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Employee Profile Details</h2>
+            <div id="modalContent">
+                <!-- Profile details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample employee data
+        const employees = {
+            1: {
+                name: "John Doe",
+                location: "New York, NY",
+                email: "john.doe@company.com",
+                contact: "+1 (555) 123-4567",
+                linkedin: "linkedin.com/in/johndoe",
+                github: "github.com/johndoe",
+                college: "MIT",
+                branch: "Computer Science"
+            },
+            2: {
+                name: "Jane Smith",
+                location: "San Francisco, CA",
+                email: "jane.smith@company.com",
+                contact: "+1 (555) 987-6543",
+                linkedin: "linkedin.com/in/janesmith",
+                github: "github.com/janesmith",
+                college: "Stanford University",
+                branch: "Software Engineering"
+            },
+            3: {
+                name: "Mike Johnson",
+                location: "Austin, TX",
+                email: "mike.johnson@company.com",
+                contact: "+1 (555) 456-7890",
+                linkedin: "linkedin.com/in/mikejohnson",
+                github: "github.com/mikejohnson",
+                college: "UT Austin",
+                branch: "Information Technology"
+            },
+            4: {
+                name: "Sarah Wilson",
+                location: "Seattle, WA",
+                email: "sarah.wilson@company.com",
+                contact: "+1 (555) 321-0987",
+                linkedin: "linkedin.com/in/sarahwilson",
+                github: "github.com/sarahwilson",
+                college: "University of Washington",
+                branch: "Data Science"
+            },
+            5: {
+                name: "David Brown",
+                location: "Boston, MA",
+                email: "david.brown@company.com",
+                contact: "+1 (555) 654-3210",
+                linkedin: "linkedin.com/in/davidbrown",
+                github: "github.com/davidbrown",
+                college: "Harvard University",
+                branch: "Computer Engineering"
+            }
+        };
+
+        function openModal(employeeId) {
+            const modal = document.getElementById('profileModal');
+            const modalContent = document.getElementById('modalContent');
+            const employee = employees[employeeId];
+
+            if (employee) {
+                modalContent.innerHTML = `
+                    <div class="modal-info"><strong>Name:</strong> ${employee.name}</div>
+                    <div class="modal-info"><strong>Location:</strong> ${employee.location}</div>
+                    <div class="modal-info"><strong>Email:</strong> <a href="mailto:${employee.email}">${employee.email}</a></div>
+                    <div class="modal-info"><strong>Contact:</strong> <a href="tel:${employee.contact}">${employee.contact}</a></div>
+                    <div class="modal-info"><strong>LinkedIn:</strong> <a href="https://${employee.linkedin}" target="_blank">${employee.linkedin}</a></div>
+                    <div class="modal-info"><strong>GitHub:</strong> <a href="https://${employee.github}" target="_blank">${employee.github}</a></div>
+                    <div class="modal-info"><strong>College:</strong> ${employee.college}</div>
+                    <div class="modal-info"><strong>Branch:</strong> ${employee.branch}</div>
+                `;
+            }
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('profileModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('profileModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Add smooth hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.employee-row');
+            
+            rows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15)';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+
+        // Add click animation to buttons
+        document.querySelectorAll('.view-profile-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

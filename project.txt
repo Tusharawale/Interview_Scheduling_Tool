@@ -1,0 +1,228 @@
+Great — if you're using **VS Code**, you can absolutely build and run a full Spring Boot email-sending project from scratch. Here's a clear, step-by-step guide to get you started — even if you're new to Spring Boot.
+
+---
+
+## ✅ Step-by-Step: Create a Spring Boot Email App in VS Code
+
+---
+
+### 🔧 Step 1: Install Required Tools
+
+Make sure you have:
+
+| Tool              | Install Link                                            |
+| ----------------- | ------------------------------------------------------- |
+| Java JDK 17+      | [Download JDK](https://adoptium.net)                    |
+| Maven             | [Download Maven](https://maven.apache.org/download.cgi) |
+| VS Code           | [VS Code](https://code.visualstudio.com/)               |
+| VS Code Extension | Java Extension Pack (via Extensions tab)                |
+
+Check Java & Maven installed:
+
+```bash
+java -version
+mvn -version
+```
+
+---
+
+### ⚙️ Step 2: Create Spring Boot Project Using Spring Initializr
+
+Go to [https://start.spring.io](https://start.spring.io)
+
+**Fill out:**
+
+* **Project:** Maven
+* **Language:** Java
+* **Group:** `com.example`
+* **Artifact:** `emaildemo`
+* **Dependencies:**
+
+  * Spring Web
+  * Spring Boot DevTools
+  * Spring Boot Starter Mail
+
+Click **Generate**, unzip the project, and open the folder in **VS Code**.
+
+---
+
+### 📁 Step 3: Understand Project Structure
+
+After opening the folder in VS Code, you’ll see:
+
+```
+emaildemo/
+├── src/
+│   ├── main/
+│   │   ├── java/com/example/emaildemo/
+│   │   │   ├── EmailDemoApplication.java
+│   │   │   ├── service/EmailService.java
+│   │   │   └── controller/EmailController.java
+│   └── resources/
+│       └── application.properties
+└── pom.xml
+```
+
+---
+
+### 📝 Step 4: Configure Email Settings in `application.properties`
+
+Create or edit:
+`src/main/resources/application.properties`
+
+```properties
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your_email@gmail.com
+spring.mail.password=your_app_password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
+
+🔐 **Important:**
+Use a **Gmail App Password**, not your normal Gmail password.
+
+* Create here: [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+
+---
+
+### 💻 Step 5: Create Email Service
+
+Create: `src/main/java/com/example/emaildemo/service/EmailService.java`
+
+```java
+package com.example.emaildemo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EmailService {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    public void sendEmail(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("your_email@gmail.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        mailSender.send(message);
+    }
+}
+```
+
+---
+
+### 🌐 Step 6: Create REST Controller
+
+Create: `src/main/java/com/example/emaildemo/controller/EmailController.java`
+
+```java
+package com.example.emaildemo.controller;
+
+import com.example.emaildemo.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/email")
+public class EmailController {
+
+    @Autowired
+    private EmailService emailService;
+
+    @PostMapping("/send")
+    public String sendEmail(@RequestParam String to,
+                            @RequestParam String subject,
+                            @RequestParam String body) {
+        emailService.sendEmail(to, subject, body);
+        return "Email sent successfully!";
+    }
+}
+```
+
+---
+
+### 🚀 Step 7: Main Application Class
+
+`src/main/java/com/example/emaildemo/EmailDemoApplication.java`
+
+```java
+package com.example.emaildemo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class EmailDemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(EmailDemoApplication.class, args);
+    }
+}
+```
+
+---
+
+### ▶️ Step 8: Run the App
+
+In **VS Code Terminal**:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Or click **"Run"** on the `EmailDemoApplication.java` file (top right green arrow).
+
+---
+
+### ✅ Step 9: Test the Email API
+
+Use Postman or browser:
+
+**POST** `http://localhost:8080/email/send?to=recipient@gmail.com&subject=Hello&body=Test email from Spring Boot`
+
+If successful, it will print:
+
+```text
+Email sent successfully!
+```
+
+---
+
+## 📬 Gmail Limits (Free Tier)
+
+| Limit                | Notes                           |
+| -------------------- | ------------------------------- |
+| \~100–150 emails/day | May vary, not reliable for bulk |
+| Use App Password     | Gmail blocks login without it   |
+| Avoid spam           | Add SPF/DKIM, sender name, etc. |
+
+---
+
+## 🎁 Bonus: How to Hide Credentials (Optional)
+
+Use environment variables (recommended for security):
+
+In `application.properties`:
+
+```properties
+spring.mail.username=${EMAIL_USERNAME}
+spring.mail.password=${EMAIL_PASSWORD}
+```
+
+In terminal (before running):
+
+```bash
+export EMAIL_USERNAME=your_email@gmail.com
+export EMAIL_PASSWORD=your_app_password
+```
+
+---
+
+Would you like me to create a downloadable project (zip or GitHub repo) that you can run in VS Code directly?
+
+Or do you want to upgrade this to SendGrid or HTML email next?

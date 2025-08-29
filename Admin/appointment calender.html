@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Appointment</title>
+    <link rel="stylesheet" href="appointment calender.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calendar Appointment</h1>
+        </header>
+
+        
+        <!-- Full Calendar -->
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button class="calendar-nav-btn" id="prevMonth">‹</button>
+                <h2 id="currentMonth">December 2024</h2>
+                <button class="calendar-nav-btn" id="nextMonth">›</button>
+            </div>
+            <div class="calendar-weekdays">
+                <div class="weekday">Sun</div>
+                <div class="weekday">Mon</div>
+                <div class="weekday">Tue</div>
+                <div class="weekday">Wed</div>
+                <div class="weekday">Thu</div>
+                <div class="weekday">Fri</div>
+                <div class="weekday">Sat</div>
+            </div>
+            <div class="calendar-dates" id="calendarDates">
+                <!-- Calendar dates will be generated here -->
+            </div>
+        </div>
+
+        <!-- Appointment List -->
+        <div class="appointment-section">
+            <h2>Appointment list</h2>
+            <div class="appointment-list" id="appointmentList">
+                <!-- Appointments will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for appointment details -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="appointment calender.js"></script>
+</body>
+</html>

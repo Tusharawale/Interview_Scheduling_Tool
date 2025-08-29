@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Filter Website</title>
+    <link rel="stylesheet" href="IST Admin Appointment list filter.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-grid">
+                <div class="dropdown">
+                    <button class="dropdown-btn" data-filter="branch">
+                        Branch <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="branch-dropdown">
+                        <label><input type="checkbox" value="Mumbai"> Mumbai</label>
+                        <label><input type="checkbox" value="Delhi"> Delhi</label>
+                        <label><input type="checkbox" value="Bangalore"> Bangalore</label>
+                        <label><input type="checkbox" value="Chennai"> Chennai</label>
+                        <label><input type="checkbox" value="Pune"> Pune</label>
+                        <label><input type="checkbox" value="Hyderabad"> Hyderabad</label>
+                        <label><input type="checkbox" value="Kolkata"> Kolkata</label>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropdown-btn" data-filter="gender">
+                        Gender <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="gender-dropdown">
+                        <label><input type="checkbox" value="Male"> Male</label>
+                        <label><input type="checkbox" value="Female"> Female</label>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropdown-btn" data-filter="education">
+                        Education <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="education-dropdown">
+                        <label><input type="checkbox" value="MBA"> MBA</label>
+                        <label><input type="checkbox" value="B.Tech"> B.Tech</label>
+                        <label><input type="checkbox" value="M.Tech"> M.Tech</label>
+                        <label><input type="checkbox" value="B.Des"> B.Des</label>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropdown-btn" data-filter="state">
+                        State <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="state-dropdown">
+                        <label><input type="checkbox" value="Maharashtra"> Maharashtra</label>
+                        <label><input type="checkbox" value="Delhi"> Delhi</label>
+                        <label><input type="checkbox" value="Karnataka"> Karnataka</label>
+                        <label><input type="checkbox" value="Tamil Nadu"> Tamil Nadu</label>
+                        <label><input type="checkbox" value="Telangana"> Telangana</label>
+                        <label><input type="checkbox" value="West Bengal"> West Bengal</label>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropdown-btn" data-filter="city">
+                        City <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="city-dropdown">
+                        <label><input type="checkbox" value="Mumbai"> Mumbai</label>
+                        <label><input type="checkbox" value="New Delhi"> New Delhi</label>
+                        <label><input type="checkbox" value="Bangalore"> Bangalore</label>
+                        <label><input type="checkbox" value="Chennai"> Chennai</label>
+                        <label><input type="checkbox" value="Pune"> Pune</label>
+                        <label><input type="checkbox" value="Hyderabad"> Hyderabad</label>
+                        <label><input type="checkbox" value="Kolkata"> Kolkata</label>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropdown-btn" data-filter="post">
+                        Post <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="post-dropdown">
+                        <label><input type="checkbox" value="Manager"> Manager</label>
+                        <label><input type="checkbox" value="Developer"> Developer</label>
+                        <label><input type="checkbox" value="Designer"> Designer</label>
+                        <label><input type="checkbox" value="Analyst"> Analyst</label>
+                        <label><input type="checkbox" value="Lead"> Lead</label>
+                        <label><input type="checkbox" value="Consultant"> Consultant</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <div class="action-buttons">
+                    <button id="apply-btn" class="apply-btn">Apply</button>
+                    <button id="clear-btn" class="clear-btn">Clear Filters</button>
+                </div>
+                <div class="select-all-container">
+                    <span>Select All</span>
+                    <label class="switch">
+                        <input type="checkbox" id="select-all-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Counter -->
+        <div class="results-info">
+            <p id="results-count">Showing 12 of 12 profiles</p>
+          
+        </div>
+
+<div class="add-button-container">
+    <button onclick="handleAddProfile()" class="add-btn">Add in schedul</button>
+</div>
+
+        <!-- Profile Cards Grid -->
+        <div class="profiles-grid" id="profiles-grid">
+            <!-- Profile cards will be dynamically generated here -->
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="no-results" style="display: none;">
+            <p>No profiles found matching your filters.</p>
+            <button onclick="clearAllFilters()" class="clear-btn">Clear all filters</button>
+        </div>
+    </div>
+
+    <script src="IST Admin Appointment list filter .js"></script>
+</body>
+</html>

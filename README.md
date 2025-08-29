@@ -22,9 +22,9 @@ Key functionalities include:
 | Layer         | Technology             | Logo                                            |
 |---------------|------------------------|------------------------------------------------|
 | Frontend      | HTML, CSS, JavaScript  | ![HTML5](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg) ![CSS3](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg) ![JavaScript](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg) |
-| Backend       | Java Spring Boot       | ![Java](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg) ![Spring Boot](https://spring.io/images/spring-logo-2022.svg) |
+| Backend       | Java Spring Boot       | ![Java](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg) ![Spring Boot](.svg) |
 | Database      | SQL                    | ![SQL](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg) |
-| Data Analysis | Power BI               | ![Power BI](https://tse3.mm.bing.net/th/id/OIP.Oxo-u9GMK3zbEM5h-FiVnQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3.svg) |
+| Data Analysis | Power BI               | ![Power BI](.svg) |
 
 ---
 

@@ -119,51 +119,7 @@ This project follows a **Modular Monolithic Architecture**, ensuring:
 - MySQL
   
 
-### 🌐 Frontend
 
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-
-### 🔗 Real-Time & Media
-
-- WebRTC
-- WebSocket
-
-### 🧠 AI & Processing
-
-- Whisper (Speech-to-Text)
-- Custom analytics engine
-
-### 🧪 Code Evaluation
-
-- Judge0 API (optional)
-- Internal evaluation engine
-
----
-
-## 📦 Deployment Model
-
-- Single artifact (JAR)
-- Backend serves frontend (no separate deployment)
-- Ideal for:
-  - Academic institutions
-  - Small-scale enterprise setups
-
----
-
-
-## 🔮 Future Enhancements
-
-- 🔐 JWT-based authentication & authorization
-- 🛡️ Object-level access control
-- ⚡ Asynchronous processing (RabbitMQ / Kafka)
-- ☁️ Migration to cloud object storage (AWS S3 / GCP)
-- 📈 Advanced monitoring & logging (Prometheus, Grafana)
-- 📊 Enhanced analytics dashboard
-- 🤖 AI-based candidate recommendation system
-
----
 
 ## 📷 Screenshots
 
@@ -547,9 +503,10 @@ mvn spring-boot:run
 ---
 
 ##  License
-
-
----
+ https://iarjset.com/papers/interview-scheduling-tool/
+ ---
+ https://zenodo.org/records/19533329
+ ---
 
 ##  Author
 

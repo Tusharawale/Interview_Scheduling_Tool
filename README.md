@@ -117,7 +117,11 @@ This project follows a **Modular Monolithic Architecture**, ensuring:
 ### 🗄️ Database
 
 - MySQL
-  
+  <p align="center">
+  <img src="https://raw.githubusercontent.com/Tusharawale/Interview_Scheduling_Tool/main/Screenshot%202026-04-24%20213307.png" width="900"/>
+  <img src="https://raw.githubusercontent.com/Tusharawale/Interview_Scheduling_Tool/main/Screenshot%202026-04-24%20213331.png" width="900"/>
+  <img src="https://raw.githubusercontent.com/Tusharawale/Interview_Scheduling_Tool/main/Screenshot%202026-04-24%20213347.png" width="900"/>
+</p>
 
 
 

@@ -163,7 +163,144 @@ This project follows a **Modular Monolithic Architecture**, ensuring:
 
 > Add your images inside an `images/` folder in your repo
 
+### 4.1 Layered architecture (diagram)
 
+```mermaid
+flowchart TB
+  subgraph Client["Browser client"]
+    P[Static HTML/CSS/JS]
+    LS[(localStorage / sessionStorage)]
+  end
+
+  subgraph Spring["Spring Boot monolith"]
+    MVC[Spring MVC + Security]
+    C[REST controllers]
+    S[Services]
+    R[JPA repositories]
+    FS[FileStorageService]
+    WS[WebSocket STOMP]
+  end
+
+  DB[(MySQL)]
+  DISK[(Local upload folder)]
+  P --> MVC
+  LS -.->|user id in API calls| C
+  MVC --> C
+  C --> S
+  S --> R
+  R --> DB
+  S --> FS
+  FS --> DISK
+  C --> WS
+```
+
+### 4.2 User journey (high level)
+
+```mermaid
+flowchart LR
+  A[Register] --> B[Verify email]
+  B --> C[Login]
+  C --> D[Dashboard user.html]
+  D --> E[Edit Profile form2.html]
+  D --> F[Book interview]
+  D --> G[Meeting call + WS]
+  E --> H[(MySQL profile + files)]
+  F --> I[(interview_bookings)]
+```
+
+### 4.3 Admin journey (high level)
+
+```mermaid
+flowchart LR
+  A[Admin login] --> B[admin.html]
+  B --> C[Manage users]
+  B --> D[Manage interview slots]
+  B --> E[View user profile modal]
+  C --> F[(users flags / delete)]
+  D --> G[(interview_slots / bookings)]
+  E --> H[GET /api/users/id/profile]
+```
+
+### 4.4 Profile save and file storage (sequence)
+
+```mermaid
+sequenceDiagram
+  participant U as User browser
+  participant API as ProfileCrudController
+  participant PCS as ProfileCrudService
+  participant FS as FileStorageService
+  participant DB as MySQL
+  participant D as Local disk
+
+  U->>API: PUT /api/users/{id}/profile JSON
+  API->>PCS: saveProfileDetails
+  PCS->>DB: upsert user_profile
+  DB-->>PCS: ok
+  PCS-->>API: ok
+  API->>DB: read aggregate via UserProfileService
+  API-->>U: ProfileResponse JSON
+
+  U->>API: POST .../documents multipart
+  API->>FS: store(file, documents/userId)
+  FS->>D: write file
+  D-->>FS: relative path
+  FS-->>API: storage key
+  API->>PCS: saveDocument metadata
+  PCS->>DB: insert user_documents
+  API-->>U: ProfileResponse
+
+  U->>API: GET /api/files/{key}
+  API->>FS: loadAsResource(key)
+  FS->>D: read stream
+  FS-->>U: bytes + Content-Type
+```
+
+### 4.5 Main modules (dependency view)
+
+```mermaid
+graph LR
+  UC[UserController]
+  AC[AdminController]
+  IC[InterviewController]
+  AIC[AdminInterviewController]
+  PC[ProfileCrudController]
+  FC[FileController]
+  MC[MeetingController]
+  MWC[MeetingWsController]
+
+  US[UserService]
+  AS[AdminService]
+  IS[InterviewService]
+  PCS[ProfileCrudService]
+  UPS[UserProfileService]
+  FS[FileStorageService]
+  ES[EmailService]
+
+  UC --> US
+  AC --> AS
+  IC --> IS
+  AIC --> IS
+  PC --> PCS
+  PC --> UPS
+  PC --> FS
+  FC --> FS
+  MC --> ES
+  PC --> ES
+```
+
+### 4.6 Feature areas (illustrative)
+
+The following chart is **not** a runtime metric; it groups major capabilities for onboarding and planning (e.g. charts/analytics later).
+
+```mermaid
+pie showData
+    title Capabilities by functional area (illustrative)
+    "User auth & account" : 1
+    "Profile & files" : 1
+    "Interviews" : 1
+    "Administration" : 1
+    "Meetings & realtime" : 1
+```
 
 ---
 

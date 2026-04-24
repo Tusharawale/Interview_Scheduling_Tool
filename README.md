@@ -99,19 +99,25 @@ This project follows a **Modular Monolithic Architecture**, ensuring:
 
 ---
 
-## ⚙️ Tech Stack
 
-### 🔙 Backend
+##  Tech Stack Justification
 
-- Java 17
-- Spring Boot 3.3
-- Spring Data JPA
-- WebSocket (STOMP)
-- REST APIs
+| Layer | As-Is Choice | Why It Is Reasonable | Target-State Note |
+|---|---|---|---|
+| Backend | Spring Boot 3 + Java 17 | Mature ecosystem, rapid monolithic delivery, integrated REST/WebSocket/JPA | Keep core, modularize boundaries |
+| Database | MySQL | Strong relational consistency for bookings and scoring | Add read replicas as load grows |
+| Frontend | Static HTML/JS | Fast iteration, low operational complexity | Consider SPA framework for large teams |
+| Realtime | STOMP + SockJS + WebRTC mesh | Practical for small group sessions | Move to SFU for scale |
+| File Storage | Local disk | Simple and fast for local deployment | Migrate to object storage (S3-like) |
+| STT | External Whisper HTTP | Decouples heavy inference from app server | Add queue + retry + observability |
+| Coding Judge | Optional Judge0 | Standardized evaluation and isolation | Harden with async workers |
+| Reporting | OpenPDF/iText + XChart | Server-side deterministic report generation | Versioned report templates |
+
 
 ### 🗄️ Database
 
 - MySQL
+  
 
 ### 🌐 Frontend
 
@@ -220,7 +226,41 @@ flowchart LR
   D --> G[(interview_slots / bookings)]
   E --> H[GET /api/users/id/profile]
 ```
+## 9) AI/Bot Architecture (Automated Interview Analysis Pipeline)
 
+### Clarification
+
+Project4 does not include a conversational chatbot service. The "AI/Bot" capability is an **automation and evaluation pipeline**.
+
+### Internal Pipeline
+
+```mermaid
+flowchart LR
+  audioInput["AudioChunks"] --> sttAdapter["STTAdapter"]
+  sttAdapter --> transcriptStore["TranscriptCache"]
+  transcriptStore --> transcriptFinalize["TranscriptFinalize"]
+  transcriptFinalize --> commEngine["CommunicationEngine"]
+  codingInput["CodingSubmission"] --> codingEngine["CodingEngine"]
+  codingEngine --> judgeAdapter["Judge0Adapter"]
+  commEngine --> rankEngine["RankingEngine"]
+  judgeAdapter --> rankEngine
+  profileSignal["ProfileAnalytics"] --> rankEngine
+  rankEngine --> reportEngine["PDFReportEngine"]
+  reportEngine --> outputStore["FinalReports"]
+```
+
+### Input -> Processing -> Output
+
+- **Input:** audio chunks, transcript text, coding code, profile stats, manual scores.
+- **Processing:** deduplication, STT conversion, NLP-lite communication metrics, coding result evaluation, weighted ranking.
+- **Output:** per-session scores, ranked list, report artifacts, user position endpoints.
+
+### External Models/APIs Used
+
+- Whisper-compatible HTTP endpoint for speech transcription.
+- Judge0-compatible endpoint for remote code execution and evaluation.
+
+---
 ### 4.4 Profile save and file storage (sequence)
 
 ```mermaid

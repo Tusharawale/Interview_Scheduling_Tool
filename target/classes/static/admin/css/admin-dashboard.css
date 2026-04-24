@@ -1,0 +1,80 @@
+body{
+    font-family:'Inter',Arial, Helvetica, sans-serif;
+    margin:0;
+    background:#f5f6fa;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:220px;
+    background:#1e1e2f;
+    color:white;
+    padding:20px;
+}
+
+.logo{
+    font-weight:600;
+    margin-bottom:30px;
+}
+
+.sidebar nav{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.sidebar button{
+    background:none;
+    border:none;
+    color:white;
+    text-align:left;
+    padding:10px;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.sidebar button:hover{
+    background:#33334d;
+}
+
+.sidebar .active{
+    background:#6c5ce7;
+}
+
+.main{
+    flex:1;
+    padding:30px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th,td{
+    padding:10px;
+    border:1px solid #ddd;
+}
+
+th{
+    background:#f1f2f6;
+}
+
+.delete{
+    background:#e74c3c;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+/* Analytics polish (admin talent cards) */
+canvas{
+    max-width:100%;
+}

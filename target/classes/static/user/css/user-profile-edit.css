@@ -1,0 +1,16 @@
+.profile-edit-section{background:#fff;padding:20px;border-radius:8px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.profile-edit-section h3{color:#6c5ce7;margin-top:0;margin-bottom:15px}
+.form-row{display:flex;gap:15px;margin-bottom:12px;flex-wrap:wrap}
+.form-row label{min-width:120px;padding-top:8px}
+.form-row input,.form-row select,.form-row textarea{flex:1;min-width:180px;padding:8px;border:1px solid #ddd;border-radius:4px}
+.btn{background:#6c5ce7;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer}
+.btn-orange{background:#e67e22}
+.btn-danger{background:#e74c3c}
+.edu-row,.exp-row,.pl-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:10px;flex-wrap:wrap}
+.edu-row input,.exp-row input,.pl-row input,.pl-row select{flex:1;min-width:100px;padding:6px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px}
+.card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:20px;border-radius:8px;position:relative}
+.card.green{background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%)}
+.card.orange{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
+.card.blue{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
+.card .view-btn{position:absolute;bottom:10px;right:10px;background:rgba(255,255,255,0.9);color:#333;padding:4px 10px;border-radius:4px;font-size:12px;cursor:pointer;border:none}

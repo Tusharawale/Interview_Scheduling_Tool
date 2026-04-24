@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Fix Appointment</title>
+    <link rel="stylesheet" href="css/admin-dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+    <script src="js/admin-fix-appointment.js"></script>
+    <style>
+        .admin-user-modal{
+            background:white;
+            padding:24px;
+            border-radius:12px;
+            max-width:980px;
+            width:94vw;
+            max-height:88vh;
+            overflow-y:auto;
+            box-shadow:0 4px 20px rgba(0,0,0,0.3);
+        }
+        .admin-user-hero{
+            display:flex;
+            gap:16px;
+            align-items:center;
+            margin-bottom:14px;
+        }
+        .admin-user-avatar{
+            width:120px;
+            height:120px;
+            border-radius:50%;
+            border:3px solid #ddd;
+            object-fit:cover;
+            background:#f1f2f6;
+        }
+        .admin-user-card-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:12px;
+            margin-top:8px;
+        }
+        .admin-user-card{
+            background:#fff;
+            border:1px solid #ececec;
+            border-radius:10px;
+            padding:12px;
+        }
+    </style>
+</head>
+<body onload="initFixAppointmentPage()">
+<div class="container">
+    <aside class="sidebar">
+        <div class="logo">💡 INTERN PRO</div>
+        <nav>
+            <button onclick="goDashboard()">Applicants</button>
+            <button onclick="window.location.href='admin-appointments.html'">Appointments</button>
+            <button onclick="window.location.href='admin-meeting.html'">Meeting Call</button>
+            <button class="active">Fix Appointment</button>
+            <button onclick="window.location.href='admin-talent.html'">Talent</button>
+            <button onclick="window.location.href='admin-settings.html'">Settings</button>
+            <button onclick="logout()">Logout</button>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <h2>Fix Appointment Calendar</h2>
+        <p style="color:#636e72">See dates with interview slots and bookings. Click a date to view booked users and email them.</p>
+
+        <div class="section" style="margin-top:16px;background:#fff;padding:16px;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <button class="create-btn" onclick="prevMonth()">Prev</button>
+                    <strong id="calendarMonthLabel"></strong>
+                    <button class="create-btn" onclick="nextMonth()">Next</button>
+                </div>
+                <div style="font-size:13px;color:#555">
+                    <span style="display:inline-block;width:10px;height:10px;background:#74b9ff;border-radius:50%;margin-right:5px"></span> Has slot
+                    <span style="display:inline-block;width:10px;height:10px;background:#00b894;border-radius:50%;margin:0 5px 0 12px"></span> Has booking
+                </div>
+            </div>
+            <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:8px"></div>
+        </div>
+
+        <div class="section" style="margin-top:16px;background:#fff;padding:16px;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+            <h3 id="selectedDateHeading">Select a date</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Slot</th>
+                    <th>When</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="dateBookingBody">
+                <tr><td colspan="7">Select a date to view bookings</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<div id="emailComposerModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;justify-content:center;align-items:center" onclick="if(event.target===this)closeAdminEmailComposer()">
+    <div style="width:min(680px,94vw);background:#fff;border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(0,0,0,0.25)" onclick="event.stopPropagation()">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <h3 style="margin:0">Send Email</h3>
+            <button class="create-btn" style="background:#636e72" onclick="closeAdminEmailComposer()">Close</button>
+        </div>
+        <form id="adminEmailForm" onsubmit="sendAdminEmail(event)">
+            <div style="display:grid;gap:8px">
+                <input id="emailTo" placeholder="To email" required style="padding:8px;border:1px solid #ddd;border-radius:6px"/>
+                <input id="emailSubject" placeholder="Subject" required style="padding:8px;border:1px solid #ddd;border-radius:6px"/>
+                <textarea id="emailBody" placeholder="Message" rows="6" required style="padding:8px;border:1px solid #ddd;border-radius:6px"></textarea>
+                <input id="emailFile" type="file" style="padding:6px"/>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
+                <button type="button" class="create-btn" style="background:#636e72" onclick="closeAdminEmailComposer()">Cancel</button>
+                <button type="submit" class="create-btn">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="fixUserInfoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;justify-content:center;align-items:center;" onclick="if(event.target===this)closeFixUserInfoModal()">
+    <div class="admin-user-modal" onclick="event.stopPropagation()">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h3 style="margin:0;">User Information</h3>
+            <button onclick="closeFixUserInfoModal()" style="background:#666;color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;">Close</button>
+        </div>
+        <div id="fixUserInfoContent"></div>
+    </div>
+</div>
+</body>
+</html>

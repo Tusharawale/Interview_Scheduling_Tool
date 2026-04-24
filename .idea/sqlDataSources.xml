@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="c19bf324-3d3f-4f87-8543-abcd1e09c018" name="interview_scheduling_db@127.0.0.1 Mapping">
+      <data-sources db="ffe9d2ed-80dc-4c5f-bf66-b7ba01f70dc0" />
+      <scope>
+        <node kind="schema" qname="interview_scheduling_db" />
+      </scope>
+    </mapping>
+  </component>
+</project>

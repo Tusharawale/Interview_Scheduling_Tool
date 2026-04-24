@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Admin Appointments</title>
+
+    <link rel="stylesheet" href="css/admin-dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+
+    <script src="js/admin-dashboard.js">   </script>
+
+</head>
+
+<body onload="loadAppointments()">
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="logo">💡 INTERN PRO</div>
+
+        <nav>
+
+            <button onclick="goDashboard()">Applicants</button>
+            <button class="active">Appointments</button>
+
+            <button onclick="window.location.href='admin-meeting.html'">Meeting Call</button>
+
+            <button onclick="window.location.href='admin-fix-appointment.html'">Fix Appointment</button>
+            <button onclick="window.location.href='admin-talent.html'">Talent</button>
+            <button onclick="window.location.href='admin-settings.html'">Settings</button>
+
+
+            <button onclick="logout()">Logout</button>
+
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+        <h2>Appointments</h2>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Slot</th>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            </thead>
+
+            <tbody id="appointmentBody"></tbody>
+
+        </table>
+
+    </main>
+
+</div>
+
+<div id="appointmentUserInfoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;justify-content:center;align-items:center;" onclick="if(event.target===this)closeAppointmentUserInfoModal()">
+    <div style="background:white;padding:24px;border-radius:12px;max-width:980px;width:94vw;max-height:88vh;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,0.3)" onclick="event.stopPropagation()">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h3 style="margin:0;">User Information</h3>
+            <button onclick="closeAppointmentUserInfoModal()" style="background:#666;color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;">Close</button>
+        </div>
+        <div id="appointmentUserInfoContent"></div>
+    </div>
+</div>
+
+</body>
+
+</html>

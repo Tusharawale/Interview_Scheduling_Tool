@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Live Coding</title>
+    <link rel="stylesheet" href="css/user-dashboard.css">
+    <script src="js/user-dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
+</head>
+<body onload="initLiveCodingPage()">
+<div class="container">
+    <aside class="sidebar">
+        <div class="logo">💡 INTERN PRO</div>
+        <nav>
+            <button onclick="window.location.href='user.html'">Dashboard</button>
+            <button onclick="window.location.href='user-profile.html'">Profile</button>
+            <button onclick="window.location.href='user-Meeting Call.html'">Meeting Call</button>
+            <button class="active">Live Coding</button>
+            <button onclick="logout()" class="logout">Logout</button>
+        </nav>
+    </aside>
+    <main class="main">
+        <h2>Live Coding + Auto Evaluation</h2>
+        <div class="section" style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.06)">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:10px">
+                <select id="challengeSelect"></select>
+                <input id="bookingIdInput" type="number" placeholder="Booking ID (from appointment)">
+                <button id="submitCodingBtn" class="create-btn" onclick="submitLiveCoding()">Submit Code</button>
+            </div>
+            <pre id="challengeDesc" style="white-space:pre-wrap;background:#f8f9fa;padding:10px;border-radius:8px"></pre>
+            <div id="editor" style="height:420px;border:1px solid #ddd;border-radius:8px"></div>
+            <div id="codingResult" style="margin-top:12px"></div>
+        </div>
+    </main>
+</div>
+<script>
+let codingChallenges = [];
+let codingEditor = null;
+let selectedUser = null;
+
+async function initLiveCodingPage(){
+    selectedUser = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user') || 'null');
+    if(!selectedUser){ window.location.href='/login.html'; return; }
+    await loadChallenges();
+    initMonacoEditor();
+}
+
+function initMonacoEditor(){
+    require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs' } });
+    require(['vs/editor/editor.main'], function(){
+        codingEditor = monaco.editor.create(document.getElementById('editor'), {
+            value: '// Select challenge and write code here',
+            language: 'java',
+            theme: 'vs-dark',
+            automaticLayout: true
+        });
+    });
+}
+
+async function loadChallenges(){
+    const sel=document.getElementById('challengeSelect');
+    try{
+        const res=await fetch('/api/interview-upgrade/coding/challenges');
+        if(!res.ok){ sel.innerHTML='<option>No active challenges</option>'; return; }
+        codingChallenges=await res.json();
+        if(!codingChallenges.length){ sel.innerHTML='<option>No active challenges</option>'; return; }
+        sel.innerHTML=codingChallenges.map(c=>'<option value="'+c.id+'">'+escapeHtml(c.title)+' ('+escapeHtml(c.language)+')</option>').join('');
+        sel.addEventListener('change', onChallengeChange);
+        onChallengeChange();
+    }catch(_e){
+        sel.innerHTML='<option>Could not load challenges</option>';
+    }
+}
+
+function monacoLanguage(lang){
+    const l=(lang||'').toLowerCase();
+    if(l.includes('python')) return 'python';
+    if(l.includes('javascript')) return 'javascript';
+    return 'java';
+}
+
+function onChallengeChange(){
+    const id=Number(document.getElementById('challengeSelect').value||0);
+    const c=codingChallenges.find(x=>Number(x.id)===id);
+    if(!c) return;
+    document.getElementById('challengeDesc').textContent=(c.description||'') + (c.timeLimitSeconds?('\n\nTime limit: '+c.timeLimitSeconds+'s'):'');
+    if(codingEditor){
+        codingEditor.setValue(c.starterCode || '// Write your solution');
+        monaco.editor.setModelLanguage(codingEditor.getModel(), monacoLanguage(c.language));
+    }
+}
+
+async function submitLiveCoding(){
+    const btn=document.getElementById('submitCodingBtn');
+    const id=Number(document.getElementById('challengeSelect').value||0);
+    const bookingId=Number(document.getElementById('bookingIdInput').value||0);
+    const c=codingChallenges.find(x=>Number(x.id)===id);
+    if(!c || !bookingId || !selectedUser){ alert('Select challenge and enter booking ID'); return; }
+    if(!codingEditor || !codingEditor.getValue().trim()){ alert('Write some code first'); return; }
+    const payload={
+        bookingId:bookingId,
+        challengeId:id,
+        userId:selectedUser.id,
+        language:c.language,
+        sourceCode:codingEditor?codingEditor.getValue():''
+    };
+    const out=document.getElementById('codingResult');
+    if(btn) btn.disabled=true;
+    out.innerHTML='<p style="color:#555">Submitting and evaluating...</p>';
+    try{
+        const res=await fetch('/api/interview-upgrade/coding/submit',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(payload)
+        });
+        const txt=await res.text();
+        let data={}; try{ data=txt?JSON.parse(txt):{} }catch(_e){}
+        if(!res.ok){
+            out.innerHTML='<p style="color:#d63031">Submission failed: '+escapeHtml(data.message||data.error||txt||'Unknown error')+'</p>';
+            return;
+        }
+        out.innerHTML='<div style="padding:10px;border-radius:8px;background:#f1f9ff;border:1px solid #cde7ff">'+
+            '<strong>Status:</strong> '+escapeHtml(data.status||'')+'<br>'+
+            '<strong>Score:</strong> '+Number(data.score||0).toFixed(2)+'/100<br>'+
+            '<strong>Execution:</strong> '+(data.executionTimeMs||0)+' ms<br>'+
+            '<strong>Output:</strong><pre style="white-space:pre-wrap">'+escapeHtml(data.stdoutText||'')+'</pre>'+
+            '</div>';
+    }finally{
+        if(btn) btn.disabled=false;
+    }
+}
+
+function escapeHtml(s){
+    if(s==null) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
+

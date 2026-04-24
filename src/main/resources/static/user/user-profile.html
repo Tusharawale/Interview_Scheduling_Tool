@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="css/user-dashboard.css">
+    <style>.btn-edit{background:#6c5ce7;color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;margin-left:10px}.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px}.card{color:#fff;padding:20px;border-radius:8px}.card.green{background:linear-gradient(135deg,#11998e,#38ef7d)}.card.purple{background:linear-gradient(135deg,#667eea,#764ba2)}.card .view-btn{background:rgba(255,255,255,0.9);color:#333;padding:4px 10px;border-radius:4px;font-size:12px;cursor:pointer;border:none;margin-top:8px}</style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src="js/user-dashboard.js"></script>
+    <script src="../common/profile-analytics.js"></script>
+
+</head>
+
+
+<body onload="loadUserProfile()">
+
+<div class="container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">💡 INTERN PRO</div>
+
+        <nav>
+
+            <button onclick="window.location.href='user.html'">Dashboard</button>
+            <button class="active">Profile</button>
+            <button onclick="window.location.href='user-profile-edit.html'">Edit Profile</button>
+            <button onclick="window.location.href='user-Meeting Call.html'">
+                Meeting Call
+            </button>
+            <button onclick="window.location.href='user-live-coding.html'">Live Coding</button>
+
+            <button onclick="window.location.href='user-appointments.html'">
+                My Interviews
+            </button>
+
+            <button onclick="logout()" class="logout">
+                Logout
+            </button>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <div class="profile-top">
+            <img id="profileTopImage" src="" alt="Profile" class="profile-top-image">
+        </div>
+
+        <h2>My Profile <button class="btn-edit" onclick="window.location.href='user-profile-edit.html'">Edit Profile</button></h2>
+
+        <div class="section" id="profileSection">
+            <h3>Profile Details</h3>
+            <div id="profileContent"></div>
+        </div>
+
+        <div class="section" id="educationSection">
+            <h3>Education</h3>
+            <div id="educationContent"></div>
+        </div>
+
+        <div class="section" id="experienceSection">
+            <h3>Experience</h3>
+            <div id="experienceContent"></div>
+        </div>
+
+        <div class="section" id="skillsSection">
+            <h3>Skills & Programming Languages</h3>
+            <div id="skillsContent"></div>
+        </div>
+
+        <div class="section" id="certificatesSection">
+            <h3>Certificates</h3>
+            <div id="certificatesContent"></div>
+        </div>
+
+        <div class="section" id="documentsSection">
+            <h3>Documents</h3>
+            <div id="documentsContent"></div>
+        </div>
+
+        <div class="section" id="analyticsSection">
+            <h3>Insights &amp; charts</h3>
+            <p style="color:#636e72;font-size:14px">Compare your profile depth and academics to the cohort average (same data as the dashboard).</p>
+            <div id="analyticsKpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px"></div>
+            <div class="analytics-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;align-items:start;margin-top:12px">
+                <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                    <div id="eduTrendCharts"></div>
+                    <p class="chart-empty-hint" style="display:none;font-size:13px;color:#888;margin-top:8px">Add education with semester CGPA or marks to see this chart.</p>
+                </div>
+                <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                    <canvas id="chartSkillsDoughnut" height="240"></canvas>
+                </div>
+                <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                    <canvas id="chartPercentileBar" height="240"></canvas>
+                </div>
+                <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                    <canvas id="chartPlBar" height="240"></canvas>
+                </div>
+                <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                    <canvas id="chartSectionsBar" height="240"></canvas>
+                </div>
+                <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06);grid-column:1/-1;max-width:640px;margin:0 auto;width:100%">
+                    <canvas id="chartRadar" height="280"></canvas>
+                </div>
+            </div>
+            <div id="analyticsInsights" style="margin-top:16px"></div>
+            <div id="cohortCompareSection" style="margin-top:16px;background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                <h4 style="margin:0 0 10px 0;color:#2d3436">How to improve vs other users</h4>
+                <div id="cohortCompareContent" style="font-size:14px;color:#444"></div>
+            </div>
+        </div>
+
+        <div class="section" id="positionSection">
+            <h3>My Latest Position</h3>
+            <div id="positionContent">Loading...</div>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

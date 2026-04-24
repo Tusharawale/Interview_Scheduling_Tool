@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Talent analytics</title>
+    <link rel="stylesheet" href="css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="js/admin-dashboard.js"></script>
+    <script src="../common/profile-analytics.js"></script>
+</head>
+
+<body onload="initTalentAnalyticsPage()">
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="logo">💡 INTERN PRO</div>
+        <nav>
+            <button onclick="goDashboard()">Applicants</button>
+            <button onclick="window.location.href='admin-appointments.html'">Appointments</button>
+            <button onclick="window.location.href='admin-meeting.html'">Meeting Call</button>
+            <button onclick="window.location.href='admin-fix-appointment.html'">Fix Appointment</button>
+            <button class="active">Talent</button>
+            <button onclick="window.location.href='admin-settings.html'">Settings</button>
+            <button onclick="logout()">Logout</button>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <h2>Talent pool analytics</h2>
+        <p style="color:#636e72;max-width:720px">Charts use MySQL profile aggregates. Pick a user to compare their radar to the cohort. Rankings refresh when any user saves their profile (WebSocket).</p>
+
+        <div class="section" style="margin-top:16px">
+            <label for="talentUserSelect" style="display:block;font-weight:600;margin-bottom:8px">View user</label>
+            <select id="talentUserSelect" style="min-width:280px;padding:8px;border-radius:6px;border:1px solid #ddd"></select>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:20px">
+            <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                <canvas id="adminTalentRankBar" height="320"></canvas>
+            </div>
+            <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                <canvas id="adminTalentCompareBar" height="320"></canvas>
+            </div>
+        </div>
+
+        <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06);margin-top:16px;max-width:640px">
+            <canvas id="adminTalentRadar" height="300"></canvas>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:16px">
+            <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06)">
+                <canvas id="adminTalentScatter" height="320"></canvas>
+            </div>
+        </div>
+
+        <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06);margin-top:16px">
+            <h3 style="margin:0 0 12px">Applicant Location Map</h3>
+            <p style="color:#666;font-size:13px;margin:0 0 12px">
+                Applicant points are derived from user profile country, state, and city.
+            </p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+                <select id="locationCountryFilter" style="min-width:180px;padding:8px;border-radius:6px;border:1px solid #ddd"></select>
+                <select id="locationStateFilter" style="min-width:180px;padding:8px;border-radius:6px;border:1px solid #ddd"></select>
+                <select id="locationCityFilter" style="min-width:180px;padding:8px;border-radius:6px;border:1px solid #ddd"></select>
+            </div>
+            <div id="talentLocationMap" style="height:360px;border-radius:10px;border:1px solid #ececec"></div>
+            <div id="locationSummaryText" style="margin-top:10px;font-size:13px;color:#555"></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
+                <div>
+                    <strong>Top Countries</strong>
+                    <ul id="topCountriesList" style="margin:8px 0 0;padding-left:18px"></ul>
+                </div>
+                <div>
+                    <strong>Top States</strong>
+                    <ul id="topStatesList" style="margin:8px 0 0;padding-left:18px"></ul>
+                </div>
+                <div>
+                    <strong>Top Cities</strong>
+                    <ul id="topCitiesList" style="margin:8px 0 0;padding-left:18px"></ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+<script>
+function initTalentAnalyticsPage() {
+    if (!localStorage.getItem('admin')) {
+        window.location.href = '/admin/admin-login.html';
+        return;
+    }
+    if (window.ProfileAnalyticsUI) {
+        ProfileAnalyticsUI.initAdminTalentPage();
+    }
+}
+</script>
+
+</body>
+</html>

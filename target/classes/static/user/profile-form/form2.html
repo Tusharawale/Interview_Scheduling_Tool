@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Edit Profile — INTERN PRO</title>
+  <link rel="stylesheet" href="../css/user-dashboard.css"/>
+  <link rel="stylesheet" href="form.css"/>
+</head>
+<body onload="initEditPage()">
+<div class="container">
+  <aside class="sidebar">
+    <div class="logo">💡 INTERN PRO</div>
+    <nav>
+      <button onclick="window.location.href='../user.html'">Dashboard</button>
+      <button onclick="window.location.href='../user-profile.html'">Profile</button>
+      <button class="active">Edit Profile</button>
+      <button onclick="window.location.href='../user-Meeting Call.html'">Meeting Call</button>
+      <button onclick="window.location.href='../user-appointments.html'">My Interviews</button>
+      <button onclick="logout()" class="logout">Logout</button>
+    </nav>
+  </aside>
+
+  <main class="main information-main">
+    <h2>Edit My Profile</h2>
+
+    <!-- Profile: structure from original form2 (photo + information) -->
+    <div class="profile-edit-section">
+      <h3>Profile Info</h3>
+      <div class="profile-top-row">
+        <div class="profile-photo-block">
+          <img id="editProfilePreview" src="" alt="Profile"/>
+          <input type="file" id="profilePhoto" accept=".jpg,.jpeg,.png,.webp" style="display:none"/>
+          <button type="button" class="btn btn-orange btn-round" onclick="document.getElementById('profilePhoto').click();">Choose photo</button>
+          <button type="button" class="btn btn-orange btn-round" onclick="uploadProfilePhoto()">Upload</button>
+        </div>
+        <div class="profile-fields">
+          <h2 class="section-title">Information</h2>
+          <div class="form-grid-3">
+            <input id="firstName" placeholder="First name" type="text"/>
+            <input id="middleName" placeholder="Middle name" type="text"/>
+            <input id="lastName" placeholder="Last name" type="text"/>
+          </div>
+          <div class="form-row" style="margin-top:12px">
+            <label>Phone</label>
+            <input id="contactNumber" type="tel" placeholder="Contact number" maxlength="15"/>
+          </div>
+          <div class="form-row" style="margin-top:12px">
+            <label>Email ID</label>
+            <input id="email" type="email" placeholder="Enter your email id"/>
+          </div>
+          <div class="form-grid-5" style="margin-top:12px">
+            <select id="gender" aria-label="Gender">
+              <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <input id="dob" type="date" title="Date of birth"/>
+            <input id="country" type="text" placeholder="Country"/>
+            <input id="state" type="text" placeholder="State"/>
+            <input id="city" type="text" placeholder="City"/>
+          </div>
+          <div class="form-grid-2" style="margin-top:12px">
+            <input id="linkedinUrl" type="url" placeholder="LinkedIn URL"/>
+            <input id="githubUrl" type="url" placeholder="GitHub URL"/>
+          </div>
+          <button type="button" class="btn" onclick="saveProfile()">Save Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Qualification: college / branch / education / semester + semester-wise fields -->
+    <div class="profile-edit-section">
+      <h3>Qualification (semester-wise)</h3>
+      <p style="color:#636e72;font-size:0.9rem;margin-top:0">Select college, branch, and course (<strong>B.Tech / Diploma / M.Tech</strong>). Click <strong>Save Profile</strong> (top section) to store your programme in the database for the dashboard and future charts. Fill marks per semester and click <strong>Save semester</strong> for each row. Files: pdf, jpg, png, doc, docx.</p>
+      <div class="qualification-toolbar">
+        <select id="collegeSelect" aria-label="College">
+          <option value="">Select engineering college</option>
+          <option value="vnit">VNIT</option>
+          <option value="iiit">IIIT Nagpur</option>
+          <option value="rcoem">RCOEM</option>
+          <option value="gcoen">GCOEN</option>
+          <option value="ghrce">GHRCE</option>
+          <option value="ycce">YCCE</option>
+          <option value="lit">LIT</option>
+          <option value="sbjitmr">SBJITMR</option>
+          <option value="cummins">Cummins</option>
+          <option value="kits">KITS Ramtek</option>
+          <option value="kdkce">KDKCE</option>
+          <option value="jit">JIT</option>
+          <option value="svpcet">SVPCET</option>
+          <option value="pce">PCE</option>
+          <option value="itgcoe">ITMCOE</option>
+          <option value="anjuman">Anjuman</option>
+          <option value="ramdeobaba-univ">Ramdeobaba University</option>
+        </select>
+        <select id="branchSelect" aria-label="Branch">
+          <option value="">Select branch</option>
+        </select>
+        <select id="educationSelect" aria-label="Current education">
+          <option value="">Select course</option>
+          <option value="btech">B.Tech</option>
+          <option value="diploma">Diploma</option>
+          <option value="mtech">M.Tech</option>
+        </select>
+      </div>
+      <div id="semesterFields"></div>
+    </div>
+
+    <!-- Manual education rows (same API) -->
+    <div class="profile-edit-section">
+      <h3>Education (add row)</h3>
+      <div id="educationRows"></div>
+      <button type="button" class="btn" onclick="addEducationRow()">+ Add Education</button>
+    </div>
+
+    <div class="profile-edit-section">
+      <h3>Experience</h3>
+      <div id="experienceRows"></div>
+      <button type="button" class="btn btn-orange" id="addExperienceBtn">+ Add Experience</button>
+    </div>
+
+    <div class="profile-edit-section pl-section">
+      <h2 class="pl-section-title">PROGRAMMING LANGUAGES</h2>
+      <p class="pl-section-hint">Pick a language, enter the certificate issuer if applicable, upload a <strong>PDF</strong> certificate, then <strong>Save</strong>. Use <strong>Preview PDF</strong> to view stored files.</p>
+      <button type="button" class="btn btn-pl-add" id="addLanguageBtn">+ Add Programming Language</button>
+      <div id="languageContainer" class="language-container"></div>
+    </div>
+
+    <div class="profile-edit-section">
+      <div class="skills-header">
+        <h3 style="margin:0">Skills</h3>
+        <button type="button" class="btn btn-orange btn-round" id="addSkillBtn" title="Add skill">+</button>
+      </div>
+      <div id="skillRows"></div>
+      <div id="skillsContainer" aria-label="Saved skills summary"></div>
+    </div>
+
+    <div class="profile-edit-section">
+      <h3>Certificates</h3>
+      <div id="certRows"></div>
+      <button type="button" class="btn" onclick="addCertRow()">+ Add Certificate</button>
+    </div>
+
+    <div class="profile-edit-section">
+      <h3>Documents</h3>
+      <p class="file-hint">Upload PDF, images (JPG, PNG, WEBP), or Word (.doc, .docx). Use <strong>Preview</strong> to view here, or <strong>Open</strong> in a new tab.</p>
+      <div class="doc-upload-row">
+        <input type="file" id="docFile" accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.doc,.docx"/>
+        <input id="docName" placeholder="Document name" type="text"/>
+        <button type="button" class="btn" onclick="uploadDocument()">Upload</button>
+      </div>
+      <div id="docList"></div>
+    </div>
+  </main>
+</div>
+
+<div id="docPreviewModal" class="doc-preview-modal" role="dialog" aria-modal="true" aria-labelledby="docPreviewTitle" onclick="if(event.target===this)closeDocPreviewModal()">
+  <div class="doc-preview-dialog" onclick="event.stopPropagation()">
+    <div class="doc-preview-head">
+      <strong id="docPreviewTitle">Preview</strong>
+      <button type="button" class="btn" onclick="closeDocPreviewModal()">Close</button>
+    </div>
+    <div id="docPreviewBody"></div>
+  </div>
+</div>
+
+<!-- Edit-profile logic -->
+<script src="../js/user-profile-edit.js"></script>
+<script src="college.js"></script>
+<script src="semesterFields.js"></script>
+<script src="programmingLanguages.js"></script>
+<script src="skills.js"></script>
+<script src="experience.js"></script>
+<script src="imageUpload.js"></script>
+</body>
+</html>

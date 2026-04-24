@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>user-Meeting Call</title>
+    <link rel="stylesheet" href="css/user-dashboard.css">
+    <link rel="stylesheet" href="css/User-metting.css">
+    <link rel="stylesheet" href="css/User-Chat-Metting.css">
+    <script src="js/user-dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src="../common/meeting.js"></script>
+</head>
+<body onload="loadUser()">
+<div class="container">
+    <aside class="sidebar">
+        <div class="logo">💡 INTERN PRO</div>
+        <nav>
+            <button onclick="window.location.href='user.html'">Dashboard</button>
+            <button onclick="window.location.href='user-profile.html'">Profile</button>
+            <button class="active">Meeting Call</button>
+            <button onclick="window.location.href='user-live-coding.html'">Live Coding</button>
+            <button onclick="window.location.href='user-appointments.html'">My Interviews</button>
+            <button onclick="logout()" class="logout">Logout</button>
+        </nav>
+    </aside>
+    <main class="main">
+        <h1 class="title">Meeting Call</h1>
+        <p id="meetingStatusText" class="meeting-status-hint" style="font-size:14px;color:#636e72;min-height:20px"></p>
+
+        <div class="meeting-wrapper">
+            <div class="video-section">
+                <div class="video-area" id="videoArea">
+                    <video id="mainVideoEl" class="remote-video-el" autoplay playsinline></video>
+                </div>
+
+                <div class="device-row" style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center">
+                    <label style="font-size:13px">Camera</label>
+                    <select id="cameraSelect" style="flex:1;min-width:140px;max-width:280px"></select>
+                    <label style="font-size:13px">Mic</label>
+                    <select id="micSelect" style="flex:1;min-width:140px;max-width:280px"></select>
+                </div>
+
+                <div class="meeting-toolbar">
+                    <div class="controls">
+                        <button type="button" class="control-btn" id="audioBtn" title="Microphone" aria-label="Mic on">
+                            <span class="control-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/>
+                                </svg>
+                            </span>
+                            <span class="control-label">Mic on</span>
+                        </button>
+                        <button type="button" class="control-btn" id="speakerBtn" title="Speaker" aria-label="Speaker on">
+                            <span class="control-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <path fill="currentColor" d="M14 3.23v17.53c0 .4-.46.63-.78.39L7.83 17H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4.83l5.39-4.62c.32-.24.78-.01.78.39zM17.5 12a4.5 4.5 0 0 0-2.03-3.77v7.54A4.5 4.5 0 0 0 17.5 12zm0-7.5v2.06A8 8 0 0 1 21 12a8 8 0 0 1-3.5 6.44v2.06A10 10 0 0 0 23 12 10 10 0 0 0 17.5 4.5z"/>
+                                </svg>
+                            </span>
+                            <span class="control-label">Speaker on</span>
+                        </button>
+                        <button type="button" class="control-btn" id="videoBtn" title="Camera" aria-label="Cam on">
+                            <span class="control-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <path fill="currentColor" d="M9 2l-2 3H2v17h20V5h-5l-2-3H9zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+                                </svg>
+                            </span>
+                            <span class="control-label">Cam on</span>
+                        </button>
+                        <button type="button" class="control-btn" id="screenShareBtn" title="Share screen" aria-label="Share screen">
+                            <span class="control-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <path fill="currentColor" d="M4 4h16v12H4V4zm2 16h12v2H6v-2z"/>
+                                </svg>
+                            </span>
+                            <span class="control-label">Share screen</span>
+                        </button>
+                        <button type="button" class="control-btn" id="fullScreenBtn" title="Fullscreen" aria-label="Fullscreen">
+                            <span class="control-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm0-4h2V7h3V5H5v5zm10 9h-3v-2h3v-3h2v5h-2zM14 5h5v5h-2V7h-3V5z"/>
+                                </svg>
+                            </span>
+                            <span class="control-label">Fullscreen</span>
+                        </button>
+                    </div>
+                    <div class="call-buttons">
+                        <button type="button" class="call-btn end-btn" id="endBtn" disabled>EXIT</button>
+                        <button type="button" class="call-btn start-btn" id="startBtn">JOIN</button>
+                    </div>
+                </div>
+
+                <div id="liveTranscriptBox" style="display:none;background:#fff;border:1px solid #ececec;border-radius:12px;padding:12px;margin:10px 0">
+                    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+                        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                            <div style="font-weight:700">Live Communication</div>
+                            <div id="commStatus" style="font-size:12px;color:#666">Waiting…</div>
+                        </div>
+                        <div style="font-size:12px;color:#444">Booking is auto-linked from meeting notification.</div>
+                    </div>
+                    <div style="margin-top:10px;display:grid;grid-template-columns:1fr;gap:10px">
+                        <div style="display:flex;gap:10px;align-items:center">
+                            <div style="min-width:130px;font-size:13px;color:#444">Communication</div>
+                            <div style="flex:1;height:10px;background:#f1f2f6;border-radius:999px;overflow:hidden">
+                                <div id="commScoreBar" style="height:100%;width:0%;background:#6c5ce7"></div>
+                            </div>
+                            <div id="commScoreValue" style="min-width:90px;text-align:right;font-weight:800">0.00/100</div>
+                        </div>
+                        <div>
+                            <div style="font-size:12px;color:#666;margin-bottom:6px">Live transcript (Whisper)</div>
+                            <div id="liveTranscriptText" style="white-space:pre-wrap;max-height:140px;overflow:auto;background:#fafafa;border:1px solid #eee;border-radius:10px;padding:10px">(listening…)</div>
+                        </div>
+                        <div>
+                            <div style="font-size:12px;color:#666;margin-bottom:6px">Detected issues (grammar/spelling + communication)</div>
+                            <div id="liveTranscriptIssues" style="white-space:pre-wrap;max-height:120px;overflow:auto;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:10px;color:#9a3412">Waiting for speech sample...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="participants-grid" id="participantsGrid"></div>
+            </div>
+
+            <div class="chat-section">
+                <div class="chat-header">Live Chat</div>
+
+                <div id="chatTabPanel">
+                    <div id="typingIndicator" style="font-size:12px;min-height:18px;color:#666;padding:4px 0"></div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="document-upload">
+                        <input type="file" id="docInput" hidden>
+                        <label for="docInput" class="doc-upload-btn">📎 Share</label>
+                    </div>
+                    <div class="shared-document" id="sharedDoc" style="display:none;">
+                        📄 <span id="docName"></span>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Type message...">
+                        <button type="button" id="sendBtn">↑</button>
+                    </div>
+                </div>
+
+                <div id="participantTabPanel">
+                    <div class="chat-messages" id="participantListText" style="min-height:120px"></div>
+                </div>
+            </div>
+            <button type="button" id="fsChatToggleBtn" class="fs-chat-toggle-btn" aria-label="Toggle chat panel" title="Toggle chat panel">💬</button>
+        </div>
+    </main>
+</div>
+<script>
+    window.addEventListener('load', () => {
+        if (window.MeetingApp) {
+            window.MeetingApp.startMeeting({ role: 'user' });
+        }
+    });
+</script>
+</body>
+</html>
